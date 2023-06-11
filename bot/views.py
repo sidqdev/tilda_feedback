@@ -7,6 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def create_feedback(request: HttpRequest):
+    if request.POST.get('name') is None:
+        return JsonResponse({"status": "tilda-ok"})
+        
     media = None
     if request.FILES.get('media') is not None:
         name = handle_uploaded_file(request.FILES['media'], request.FILES['media'].name)
