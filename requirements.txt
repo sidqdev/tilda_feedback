@@ -1,0 +1,4 @@
+django 
+python-dotenv
+pytelegrambotapi
+python-magic

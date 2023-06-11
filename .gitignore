@@ -1,0 +1,5 @@
+.env
+*.jpg
+*.mp4
+*.pyc
+*.sqlite3
