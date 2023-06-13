@@ -11,7 +11,7 @@ def create_feedback(request: HttpRequest):
         return JsonResponse({"status": "tilda-ok"})
 
     media = None
-    print(request.FILES)
+    print(request.POST.items())
     if request.FILES.get('media') is not None:
         name = handle_uploaded_file(request.FILES['media'], request.FILES['media'].name)
         f = open(name, "rb")

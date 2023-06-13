@@ -20,7 +20,7 @@ from . import settings
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("api/admin/", admin.site.urls),
     path('api/', include('bot.urls')),
 ]
 
