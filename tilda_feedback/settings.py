@@ -29,7 +29,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 BOT = telebot.TeleBot(BOT_TOKEN)
 MODERATION_CHAT_ID = os.getenv("MODERATION_CHAT_ID")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CORS_ALLOWED_ORIGINS = ['https://*', 'http://*', os.getenv("CORS_HOST")]
@@ -127,7 +127,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 MEDIA_ROOT = 'media/'
-MEDIA_URL = 'media/'
+MEDIA_URL = 'api/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
