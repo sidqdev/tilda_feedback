@@ -29,7 +29,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 BOT = telebot.TeleBot(BOT_TOKEN)
 MODERATION_CHAT_ID = os.getenv("MODERATION_CHAT_ID")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
