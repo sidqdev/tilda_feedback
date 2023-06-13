@@ -2,3 +2,4 @@ django
 python-dotenv
 pytelegrambotapi
 python-magic
+django-cors-headers
