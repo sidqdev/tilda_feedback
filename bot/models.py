@@ -6,7 +6,7 @@ class Feedback(models.Model):
     name = models.TextField()
     working_place = models.TextField()
     text = models.TextField()
-    media = models.FileField(null=True, blank=True)
+    media = models.CharField(null=True, blank=True, max_length=512)
     created_at = models.DateTimeField(default=datetime.now)
     
     is_accepted = models.BooleanField(default=False)

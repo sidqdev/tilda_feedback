@@ -1,33 +1,24 @@
 from django.http import HttpRequest, JsonResponse
 from .models import Feedback
-from django.core.files import File
-from .utils import handle_uploaded_file, send_feedback_to_moderation
+from .utils import send_feedback_to_moderation
 from django.views.decorators.csrf import csrf_exempt
-
+import threading
 
 @csrf_exempt
 def create_feedback(request: HttpRequest):
     if request.POST.get('name') is None:
         return JsonResponse({"status": "tilda-ok"})
 
-    media = None
-    print(list(request.POST.items()))
-    if request.FILES.get('media') is not None:
-        name = handle_uploaded_file(request.FILES['media'], request.FILES['media'].name)
-        f = open(name, "rb")
-        media=File(f, name=name)
-            
-
     feedback = Feedback(
         name=request.POST.get('name'),
         working_place=request.POST.get('working_place'),
         text=request.POST.get('text'),
-        media=media
+        media=request.POST.get('media'),
     )
 
     feedback.save()
 
-    send_feedback_to_moderation(feedback)
+    threading.Thread(target=send_feedback_to_moderation, args=(feedback,))
 
     return JsonResponse({"status": "ok"})
 

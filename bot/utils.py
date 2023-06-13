@@ -4,30 +4,18 @@ from .models import Feedback
 import telebot
 bot: telebot.TeleBot = settings.BOT
 import magic
+import time
 
 
-def get_mime_type(file):
-    """
-    Get MIME by reading the header of the file
-    """
-    initial_pos = file.tell()
-    file.seek(0)
-    mime_type = magic.from_buffer(file.read(2048), mime=True)
-    file.seek(initial_pos)
-    return mime_type
-
-
-def handle_uploaded_file(f, name):
-    name = uuid4().hex + name
-    name = f"{settings.MEDIA_ROOT}/{name}"
-    with open(name, "wb+") as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-    
-    return name
-
+def get_mime_type(file: str): # Test function
+    type = file.rsplit('.')[-1]
+    if type in ('png', 'jpg', 'jpeg'):
+        return 'image'
+    if type in ('mp4', ):
+        return 'video'
 
 def send_feedback_to_moderation(feedback: Feedback):
+    time.sleep(20)
     text = f'''Новый отзыв
 Имя: {feedback.name}
 Место работы: {feedback.working_place}
@@ -42,7 +30,7 @@ def send_feedback_to_moderation(feedback: Feedback):
     if feedback.media.name is None:
         bot.send_message(settings.MODERATION_CHAT_ID, text=text, reply_markup=markup)
     else:
-        mimetype = get_mime_type(feedback.media.file).split('/')[0]
+        mimetype = get_mime_type(feedback.media).split('/')[0]
         if mimetype == 'video':
             bot.send_video(settings.MODERATION_CHAT_ID, caption=text, reply_markup=markup, video=feedback.media)
         elif mimetype == 'image':
