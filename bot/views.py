@@ -18,7 +18,7 @@ def create_feedback(request: HttpRequest):
 
     feedback.save()
 
-    threading.Thread(target=send_feedback_to_moderation, args=(feedback,))
+    threading.Thread(target=send_feedback_to_moderation, args=(feedback,)).start()
 
     return JsonResponse({"status": "ok"})
 
