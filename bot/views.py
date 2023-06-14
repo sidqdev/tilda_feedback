@@ -6,7 +6,6 @@ import threading
 
 @csrf_exempt
 def create_feedback(request: HttpRequest):
-    print(list(request.POST.items()))
     if request.POST.get('name') is None:
         return JsonResponse({"status": "tilda-ok"})
 

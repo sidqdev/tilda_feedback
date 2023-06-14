@@ -44,7 +44,6 @@ def dropbox_get_shared_link(dropbox_file_path):
     Returns:
         link: The shared link.
     """
-    print(dropbox_file_path)
     filename = dropbox_file_path.rsplit('/')[-1]
     dropbox_file_path = f'/Приложения/Tilda Publishing/{filename}'
     try:
@@ -54,7 +53,6 @@ def dropbox_get_shared_link(dropbox_file_path):
         shared_link = shared_link_metadata.url
         return shared_link.replace('?dl=0', '?dl=1')
     except dropbox.exceptions.ApiError as exception:
-        print(exception)
         if exception.error.is_shared_link_already_exists():
             shared_link_metadata = dbx.sharing_get_shared_links(dropbox_file_path)
             shared_link = shared_link_metadata.links[0].url
@@ -71,9 +69,7 @@ def get_mime_type(file: str): # Test function
 def send_feedback_to_moderation(feedback: Feedback):
     if feedback.media is not None:
         raw_link = get_dropbox_link(feedback.media)
-        print(raw_link)
         link = dropbox_get_shared_link(raw_link)
-        print(link)
         feedback.media = link
         feedback.save()
 
