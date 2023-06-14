@@ -24,5 +24,5 @@ def create_feedback(request: HttpRequest):
 
 
 def get_feedbacks(request: HttpRequest):
-    feedback = Feedback.objects.filter(is_accepted=True).values()
+    feedback = Feedback.objects.filter(is_accepted=True, media__isnull=False).order_by("?").values()
     return JsonResponse(list(feedback), safe=False)
