@@ -35,8 +35,7 @@ ALLOWED_HOSTS = ['*']
 CORS_ALLOWED_ORIGINS = ['https://*', 'http://*', os.getenv("CORS_HOST")]
 CSRF_TRUSTED_ORIGINS = ['https://*', 'http://*', os.getenv("CSRF_HOST")]
 
-print(CORS_ALLOWED_ORIGINS)
-
+DROPBOX_ACCESS_TOKEN = os.getenv("DROPBOX_ACCESS_TOKEN")
 # Application definition
 
 INSTALLED_APPS = [

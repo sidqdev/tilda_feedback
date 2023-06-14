@@ -3,3 +3,6 @@ python-dotenv
 pytelegrambotapi
 python-magic
 django-cors-headers
+bs4
+requests
+dropbox
