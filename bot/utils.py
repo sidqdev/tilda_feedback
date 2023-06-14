@@ -53,6 +53,7 @@ def dropbox_get_shared_link(dropbox_file_path):
         shared_link = shared_link_metadata.url
         return shared_link.replace('?dl=0', '?dl=1')
     except dropbox.exceptions.ApiError as exception:
+        print(exception)
         if exception.error.is_shared_link_already_exists():
             shared_link_metadata = dbx.sharing_get_shared_links(dropbox_file_path)
             shared_link = shared_link_metadata.links[0].url
