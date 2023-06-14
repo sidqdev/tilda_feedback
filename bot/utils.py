@@ -33,6 +33,7 @@ def dropbox_connect():
     return dbx
 
 
+
 def dropbox_get_shared_link(dropbox_file_path):
     """Get a shared link for a Dropbox file path.
 
@@ -42,6 +43,9 @@ def dropbox_get_shared_link(dropbox_file_path):
     Returns:
         link: The shared link.
     """
+    print(dropbox_file_path)
+    filename = dropbox_file_path.rsplit('/')[-1]
+    dropbox_file_path = f'/Tilda Publishing/{filename}'
 
     try:
         dbx = dropbox_connect()
