@@ -45,10 +45,10 @@ def dropbox_get_shared_link(dropbox_file_path):
     """
     print(dropbox_file_path)
     filename = dropbox_file_path.rsplit('/')[-1]
-    dropbox_file_path = f'/Tilda Publishing/{filename}'
-    print(dropbox_file_path)
+    dropbox_file_path = f'/Приложения/Tilda Publishing/{filename}'
     try:
         dbx = dropbox_connect()
+        dbx.sharing_unshare_file(dropbox_file_path)
         shared_link_metadata = dbx.sharing_create_shared_link_with_settings(dropbox_file_path)
         shared_link = shared_link_metadata.url
         return shared_link.replace('?dl=0', '?dl=1')
@@ -58,6 +58,7 @@ def dropbox_get_shared_link(dropbox_file_path):
             shared_link_metadata = dbx.sharing_get_shared_links(dropbox_file_path)
             shared_link = shared_link_metadata.links[0].url
             return shared_link.replace('?dl=0', '?dl=1')
+
 
 def get_mime_type(file: str): # Test function
     type = file.split('?')[0].rsplit('.')[-1]
