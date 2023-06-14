@@ -73,7 +73,7 @@ def send_feedback_to_moderation(feedback: Feedback):
         print(raw_link)
         link = dropbox_get_shared_link(raw_link)
         print(link)
-        feedback.media = link
+        feedback.media = link.split('?')[0]
         feedback.save()
 
     text = f'''Новый отзыв
