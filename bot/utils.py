@@ -46,7 +46,7 @@ def dropbox_get_shared_link(dropbox_file_path):
     print(dropbox_file_path)
     filename = dropbox_file_path.rsplit('/')[-1]
     dropbox_file_path = f'/Tilda Publishing/{filename}'
-
+    print(dropbox_file_path)
     try:
         dbx = dropbox_connect()
         shared_link_metadata = dbx.sharing_create_shared_link_with_settings(dropbox_file_path)
