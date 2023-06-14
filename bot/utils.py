@@ -4,8 +4,6 @@ import bs4
 from django.conf import settings
 from .models import Feedback
 import telebot
-import pathlib
-import pandas as pd
 import dropbox
 from dropbox.exceptions import AuthError
 bot: telebot.TeleBot = settings.BOT
