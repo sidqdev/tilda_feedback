@@ -6,6 +6,7 @@ from .models import Feedback
 import telebot
 import dropbox
 from dropbox.exceptions import AuthError
+import io
 bot: telebot.TeleBot = settings.BOT
 
 def get_dropbox_link(link: str):
@@ -73,7 +74,7 @@ def send_feedback_to_moderation(feedback: Feedback):
         print(raw_link)
         link = dropbox_get_shared_link(raw_link)
         print(link)
-        feedback.media = link.split('?')[0]
+        feedback.media = link
         feedback.save()
 
     text = f'''Новый отзыв
@@ -91,10 +92,12 @@ def send_feedback_to_moderation(feedback: Feedback):
     if feedback.media is None:
         bot.send_message(settings.MODERATION_CHAT_ID, text=text, reply_markup=markup)
     else:
+
         mimetype = get_mime_type(feedback.media).split('/')[0]
+        file = io.BytesIO(requests.get(feedback.media, allow_redirects=True).content)
         if mimetype == 'video':
-            bot.send_video(settings.MODERATION_CHAT_ID, caption=text, reply_markup=markup, video=feedback.media)
+            bot.send_video(settings.MODERATION_CHAT_ID, caption=text, reply_markup=markup, video=file)
         elif mimetype == 'image':
-            bot.send_photo(settings.MODERATION_CHAT_ID, caption=text, reply_markup=markup, photo=feedback.media)
+            bot.send_photo(settings.MODERATION_CHAT_ID, caption=text, reply_markup=markup, photo=file)
         else:
             raise Exception(f"unexpected '{mimetype}' type")
