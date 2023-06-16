@@ -28,7 +28,8 @@ def dropbox_connect():
     """Create a connection to Dropbox."""
 
     try:
-        dbx = dropbox.Dropbox(app_key=settings.DROPBOX_APP_KEY, app_secret=settings.DROPBOX_APP_SECRET)
+        dbx = dropbox.Dropbox(oauth2_access_token=settings.DROPBOX_ACCESS_TOKEN, app_key=settings.DROPBOX_APP_KEY, app_secret=settings.DROPBOX_APP_SECRET, oauth2_refresh_token=settings.DROPBOX_REFRESH_TOKEN)
+        dbx.refresh_access_token()
     except AuthError as e:
         print('Error connecting to Dropbox with access token: ' + str(e))
     return dbx
