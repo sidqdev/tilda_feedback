@@ -28,12 +28,12 @@ def dropbox_connect():
     """Create a connection to Dropbox."""
 
     try:
-        dbx = dropbox.Dropbox(settings.DROPBOX_ACCESS_TOKEN)
+        dbx = dropbox.Dropbox(app_key=settings.DROPBOX_APP_KEY, app_secret=settings.DROPBOX_APP_SECRET)
     except AuthError as e:
         print('Error connecting to Dropbox with access token: ' + str(e))
     return dbx
 
-
+dropbox_connect()
 
 def dropbox_get_shared_link(dropbox_file_path):
     """Get a shared link for a Dropbox file path.
