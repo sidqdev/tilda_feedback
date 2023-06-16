@@ -33,7 +33,6 @@ def dropbox_connect():
         print('Error connecting to Dropbox with access token: ' + str(e))
     return dbx
 
-dropbox_connect()
 
 def dropbox_get_shared_link(dropbox_file_path):
     """Get a shared link for a Dropbox file path.
