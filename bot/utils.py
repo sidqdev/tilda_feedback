@@ -38,7 +38,7 @@ def dropbox_connect():
             "client_secret": settings.DROPBOX_APP_SECRET
         }
         resp = requests.post("https://api.dropbox.com/oauth2/token", data=data)
-        access_token = json.loads(resp.body)['access_token']
+        access_token = json.loads(resp.text)['access_token']
         dbx = dropbox.Dropbox(oauth2_access_token=access_token)
         dbx.refresh_access_token()
     except AuthError as e:
