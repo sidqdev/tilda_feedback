@@ -7,6 +7,9 @@ import telebot
 import dropbox
 from dropbox.exceptions import AuthError
 import io
+import json 
+
+
 bot: telebot.TeleBot = settings.BOT
 
 def get_dropbox_link(link: str):
@@ -28,7 +31,15 @@ def dropbox_connect():
     """Create a connection to Dropbox."""
 
     try:
-        dbx = dropbox.Dropbox(oauth2_access_token=settings.DROPBOX_ACCESS_TOKEN, app_key=settings.DROPBOX_APP_KEY, app_secret=settings.DROPBOX_APP_SECRET, oauth2_refresh_token=settings.DROPBOX_REFRESH_TOKEN)
+        data = {
+            "grant_type": "refresh_token",
+            "refresh_token": settings.DROPBOX_REFRESH_TOKEN,
+            "client_id": settings.DROPBOX_APP_KEY,
+            "client_secret": settings.DROPBOX_APP_SECRET
+        }
+        resp = requests.post("https://api.dropbox.com/oauth2/token", data=data)
+        access_token = json.loads(resp.body)['access_token']
+        dbx = dropbox.Dropbox(oauth2_access_token=access_token)
         dbx.refresh_access_token()
     except AuthError as e:
         print('Error connecting to Dropbox with access token: ' + str(e))
